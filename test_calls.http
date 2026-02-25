@@ -1,0 +1,104 @@
+### ------------------------------------------------------------
+### Variables
+### ------------------------------------------------------------
+@baseUrl = http://127.0.0.1:8000
+@json = application/json
+
+### ------------------------------------------------------------
+### 1) Health check (FastAPI -> Ollama connectivity)
+### ------------------------------------------------------------
+GET {{baseUrl}}/health
+Accept: {{json}}
+
+### ------------------------------------------------------------
+### 2) List models (proxy to Ollama /api/tags)
+### ------------------------------------------------------------
+GET {{baseUrl}}/models
+Accept: {{json}}
+
+### ------------------------------------------------------------
+### 3) Chat (non-streaming)
+### ------------------------------------------------------------
+POST {{baseUrl}}/chat
+Content-Type: {{json}}
+Accept: {{json}}
+
+{
+  "model": "llama3.2",
+  "stream": false,
+  "messages": [
+    { "role": "user", "content": "Say hello in one sentence and confirm you are reachable." }
+  ]
+}
+
+### ------------------------------------------------------------
+### 4) Chat (streaming NDJSON)
+### NOTE: Many clients display streamed chunks as they arrive.
+### Ollama chat streaming returns newline-delimited JSON objects.
+### ------------------------------------------------------------
+POST {{baseUrl}}/chat
+Content-Type: {{json}}
+Accept: application/x-ndjson
+
+{
+  "model": "llama3.2",
+  "stream": true,
+  "messages": [
+    { "role": "user", "content": "Stream a short 2-3 sentence explanation of distributed tracing." }
+  ]
+}
+
+### ------------------------------------------------------------
+### 5) Chat (with options: temperature, num_predict etc.)
+### "options" is passed through to Ollama.
+### ------------------------------------------------------------
+POST {{baseUrl}}/chat
+Content-Type: {{json}}
+Accept: {{json}}
+
+{
+  "model": "llama3.2",
+  "stream": false,
+  "options": {
+    "temperature": 0.2
+  },
+  "messages": [
+    { "role": "system", "content": "You are a concise assistant." },
+    { "role": "user", "content": "Return 3 bullet points about why traces matter." }
+  ]
+}
+
+### ------------------------------------------------------------
+### 6) Negative test: invalid route
+### ------------------------------------------------------------
+GET {{baseUrl}}/does-not-exist
+Accept: {{json}}
+
+### ------------------------------------------------------------
+### 7) Negative test: invalid payload (missing messages)
+### Expect: 422 validation error from FastAPI (Pydantic)
+### ------------------------------------------------------------
+POST {{baseUrl}}/chat
+Content-Type: {{json}}
+Accept: {{json}}
+
+{
+  "model": "llama3.2",
+  "stream": false
+}
+
+###
+POST http://localhost:11434/api/chat
+Content-Type: application/json
+
+{
+  "model": "llama3.2:latest",
+  "stream": false,
+  "options": {
+    "temperature": 0.2
+  },
+  "messages": [
+    { "role": "system", "content": "You are a concise assistant." },
+    { "role": "user", "content": "Return 3 bullet points about why traces matter." }
+  ]
+}
