@@ -24,6 +24,7 @@ Content-Type: {{json}}
 Accept: {{json}}
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": false,
   "messages": [
@@ -41,6 +42,7 @@ Content-Type: {{json}}
 Accept: application/x-ndjson
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": true,
   "messages": [
@@ -57,11 +59,10 @@ Content-Type: {{json}}
 Accept: {{json}}
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": false,
-  "options": {
-    "temperature": 0.2
-  },
+  "temperature": 0.2,
   "messages": [
     { "role": "system", "content": "You are a concise assistant." },
     { "role": "user", "content": "Return 3 bullet points about why traces matter." }
