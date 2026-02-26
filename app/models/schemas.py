@@ -11,7 +11,7 @@ class Message(BaseModel):
 class ChatRequest(BaseModel):
     messages: list[Message] = Field(..., min_length=1)
     provider: Literal["anthropic", "ollama"] = "anthropic"
-    model: str | None = Field(None, examples=["claude-3-5-sonnet-20241022", "llama3.2"])
+    model: str | None = Field(None, examples=["claude-sonnet-4-6", "llama3.2"])
     temperature: float = Field(0.7, ge=0.0, le=2.0)
     max_tokens: int = Field(1024, ge=1, le=8192)
     stream: bool = False

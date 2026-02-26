@@ -13,17 +13,18 @@ Accept: {{json}}
 ### ------------------------------------------------------------
 ### 2) List models (proxy to Ollama /api/tags)
 ### ------------------------------------------------------------
-GET {{baseUrl}}/models
+GET {{baseUrl}}/chat/models
 Accept: {{json}}
 
 ### ------------------------------------------------------------
 ### 3) Chat (non-streaming)
 ### ------------------------------------------------------------
-POST {{baseUrl}}/chat
+POST {{baseUrl}}/chat/completions
 Content-Type: {{json}}
 Accept: {{json}}
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": false,
   "messages": [
@@ -36,11 +37,12 @@ Accept: {{json}}
 ### NOTE: Many clients display streamed chunks as they arrive.
 ### Ollama chat streaming returns newline-delimited JSON objects.
 ### ------------------------------------------------------------
-POST {{baseUrl}}/chat
+POST {{baseUrl}}/chat/completions
 Content-Type: {{json}}
 Accept: application/x-ndjson
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": true,
   "messages": [
@@ -52,16 +54,15 @@ Accept: application/x-ndjson
 ### 5) Chat (with options: temperature, num_predict etc.)
 ### "options" is passed through to Ollama.
 ### ------------------------------------------------------------
-POST {{baseUrl}}/chat
+POST {{baseUrl}}/chat/completions
 Content-Type: {{json}}
 Accept: {{json}}
 
 {
+  "provider": "ollama",
   "model": "llama3.2",
   "stream": false,
-  "options": {
-    "temperature": 0.2
-  },
+  "temperature": 0.2,
   "messages": [
     { "role": "system", "content": "You are a concise assistant." },
     { "role": "user", "content": "Return 3 bullet points about why traces matter." }
@@ -78,7 +79,7 @@ Accept: {{json}}
 ### 7) Negative test: invalid payload (missing messages)
 ### Expect: 422 validation error from FastAPI (Pydantic)
 ### ------------------------------------------------------------
-POST {{baseUrl}}/chat
+POST {{baseUrl}}/chat/completions
 Content-Type: {{json}}
 Accept: {{json}}
 
