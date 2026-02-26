@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     traceloop_api_key: str = "NoKey"
     traceloop_base_url: str = "http://localhost:4318"
 
-    default_provider: Literal["anthropic", "ollama"] = "ollama"
+    default_provider: Literal["anthropic", "ollama"] = "anthropic"
 
 
 settings = Settings()
