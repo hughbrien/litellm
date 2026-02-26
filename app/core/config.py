@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     debug: bool = False
 
 
-    anthropic_api_key: str =     os.getenv("ANTHROPIC_KEY", "DEFAULT_KEY")
+    anthropic_api_key: str =os.getenv("ANTHROPIC_KEY", "DEFAULT_KEY")
 
 
     anthropic_default_model: str = "claude-sonnet-4-6"
@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     traceloop_api_key: str = "NoKey"
     traceloop_base_url: str = "http://localhost:4318"
 
-    default_provider: Literal["anthropic", "ollama"] = "anthropic"
+    default_provider: Literal["anthropic", "ollama"] = "ollama"
 
 
 settings = Settings()

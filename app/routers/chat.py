@@ -14,10 +14,10 @@ from app.models.schemas import (
 router = APIRouter(prefix="/chat", tags=["chat"])
 
 AVAILABLE_MODELS: list[ModelInfo] = [
-    ModelInfo(id="claude-3-5-sonnet-20241022", provider="anthropic", description="Anthropic Claude 3.5 Sonnet"),
-    ModelInfo(id="claude-3-opus-20240229",     provider="anthropic", description="Anthropic Claude 3 Opus"),
-    ModelInfo(id="claude-3-haiku-20240307",    provider="anthropic", description="Anthropic Claude 3 Haiku"),
-    ModelInfo(id="llama3.2",                   provider="ollama",    description="Meta Llama 3.2 via Ollama"),
+    ModelInfo(id="claude-4-6-sonnet", provider="anthropic", description="Anthropic Claude 3.5 Sonnet"),
+    ModelInfo(id="claude-4-6-opus",     provider="anthropic", description="Anthropic Claude 3 Opus"),
+    ModelInfo(id="claude-4-6-haiku",    provider="anthropic", description="Anthropic Claude 3 Haiku"),
+    ModelInfo(id="llama3.2:latest",                   provider="ollama",    description="Meta Llama 3.2 via Ollama"),
     ModelInfo(id="mistral",                    provider="ollama",    description="Mistral 7B via Ollama"),
     ModelInfo(id="gemma2",                     provider="ollama",    description="Google Gemma 2 via Ollama"),
 ]
